@@ -1,18 +1,27 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from sentence_transformers import SentenceTransformer, SentenceTransformerTrainer, SentenceTransformerTrainingArguments
 from sentence_transformers.losses import MultipleNegativesRankingLoss
 from sentence_transformers.training_args import BatchSamplers
-from sentence_transformers.evaluation import InformationRetrievalEvaluator
 from data.embedding_train_data import load_and_prepare_datasets
 from helpers.ir_evaluator import evaluate_information_retrieval
 
 seed=42
 
+
+print('Loading and preparing datasets...')
 #Dataset
 train_dataset, val_dataset, test_dataset = load_and_prepare_datasets(seed)
 
+print('Datasets loaded and prepared.')
+
+print('creating evaluator...')
 # Evaluator
 evaluator = evaluate_information_retrieval(test_dataset)
  
+
+print('TRAINING STARTED...')
 #TRAINING
 
 model_name = "BAAI/bge-small-en-v1.5"
@@ -21,6 +30,7 @@ batch_size = 128
 my_model_name = "bge-small-telecom"+f"_{str(epochs)}e_{str(batch_size)}bs"
 path_output = "/models/embedding/"
 
+print('loaded model:', model_name)
 model = SentenceTransformer(model_name)
 loss = MultipleNegativesRankingLoss(model)
 
@@ -60,6 +70,10 @@ trainer = SentenceTransformerTrainer(
     evaluator=evaluator,
 )
 
+print('Training...')
 trainer.train()
+print('Training finished.')
 
+print('Saving model...')
 trainer.model.save_pretrained(path_output+my_model_name)
+print('Model saved.')

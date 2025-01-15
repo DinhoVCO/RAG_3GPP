@@ -1,9 +1,11 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import json
 from sentence_transformers import SentenceTransformer
-from sentence_transformers.evaluation import InformationRetrievalEvaluator
 from data.embedding_train_data import load_and_prepare_datasets
 from helpers.ir_evaluator import evaluate_information_retrieval
-import json
-import os
+
 
 seed = 42
 output_dir = "results/embeding"
@@ -20,6 +22,8 @@ model_names = {
     'large': 'BAAI/bge-large-en-v1.5'
 }
 
+
+print("Cargando modelos...")
 models = {}
 for model_key, model_name in model_names.items():
     if model_key == 'FT_small':
@@ -27,13 +31,17 @@ for model_key, model_name in model_names.items():
     else:
         models[model_key] = SentenceTransformer(model_name)
 
-
+print("Modelos cargados")
+print("Cargando datasets...")
 # Evaluador
 train_dataset, val_dataset, test_dataset = load_and_prepare_datasets(seed)
-
+print("Datasets cargados")
+print("Evaluando modelos...")
 # Evaluator
 evaluator = evaluate_information_retrieval(test_dataset)
+print("Modelos evaluados")
 
+print("Guardando métricas...")
 metrics = {}
 for model_key, model_to_evaluate in models.items():
   metrics[model_key] = evaluator(model_to_evaluate)

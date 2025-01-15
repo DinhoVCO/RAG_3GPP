@@ -1,6 +1,5 @@
 from sentence_transformers.evaluation import InformationRetrievalEvaluator
 
-
 def evaluate_information_retrieval(test_dataset):
     corpus = dict(zip(test_dataset["q_id"], test_dataset["positive"]))
     queries = dict(zip(test_dataset["q_id"], test_dataset["anchor"]))

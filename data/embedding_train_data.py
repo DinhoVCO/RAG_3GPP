@@ -26,3 +26,5 @@ def load_and_prepare_datasets(seed=42):
     
     return train_dataset, val_dataset, test_dataset
 
+def print_hola():
+    print("Hola")
