@@ -24,25 +24,29 @@ logging.basicConfig(
 
 
 def parse_arguments():
-    logging.info("Parsing command-line arguments...")
     parser = argparse.ArgumentParser(description="Embedding model training")
     parser.add_argument('--model_name', type=str, default="BAAI/bge-small-en-v1.5", help="Base model name")
-    parser.add_argument('--new_model_name', type=str, default="BAAI/bge-small-en-v1.5", help="Base new model name")
+    parser.add_argument('--new_model_name', type=str, default="embedding/bge-small-telecom", help="Base new model name")
     parser.add_argument('--epochs', type=int, default=5, help="Number of training epochs")
     parser.add_argument('--batch_size', type=int, default=128, help="Batch size")
     parser.add_argument('--output_dir', type=str, default="/models/embedding/", help="Output directory for the trained model")
     parser.add_argument('--seed', type=int, default=42, help="Seed for reproducibility")
+    parser.add_argument('--verbose', action='store_true', help="Enable detailed logging")
     args = parser.parse_args()
-    logging.info("Arguments parsed successfully.")
     return args
 
 
+def configure_logging(verbose):
+    logging_level = logging.INFO if verbose else logging.WARNING
+    logging.basicConfig(
+        level=logging_level,
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.StreamHandler(),  # Muestra en consola
+            #logging.FileHandler("training.log")  # Guarda en archivo
+        ]
+    )
 
-#model_name = "BAAI/bge-small-en-v1.5"
-#epochs = 5
-#batch_size = 128
-#my_model_name = "bge-small-telecom"+f"_{str(epochs)}e_{str(batch_size)}bs"
-#path_output = "/models/embedding/"
 
 
 def initialize_model(model_name):
@@ -56,7 +60,7 @@ def configure_training(my_model_name, epochs, batch_size, output_dir):
     logging.info("Configuring training arguments...")
     args = SentenceTransformerTrainingArguments(
         # Required parameter:
-        output_dir=output_dir+f"checkpoints/{my_model_name}",
+        output_dir=output_dir+f"/checkpoints/{my_model_name}",
         # Optional training parameters:
         num_train_epochs=epochs,
         per_device_train_batch_size=batch_size,
@@ -106,8 +110,9 @@ def save_model(trainer, output_dir, model_name):
 
 # Main function
 def main():
-    logging.info("Starting main process...")
     args = parse_arguments()
+    configure_logging(args.verbose)
+    logging.info("Starting main process...")
     train_dataset, val_dataset, test_dataset = load_and_prepare_datasets(args.seed)
     evaluator = create_evaluator_information_retrieval(val_dataset)
     my_model_name = f"{str(args.new_model_name)}_{str(args.epochs)}e_{str(args.batch_size)}bs"
