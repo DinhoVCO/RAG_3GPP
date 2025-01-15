@@ -11,18 +11,6 @@ from helpers.ir_evaluator import create_evaluator_information_retrieval
 
 
 
-
-# Logger configuration
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.StreamHandler(),  # Displays in console
-        logging.FileHandler("training.log")  # Saves to file
-    ]
-)
-
-
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Embedding model training")
     parser.add_argument('--model_name', type=str, default="BAAI/bge-small-en-v1.5", help="Base model name")
