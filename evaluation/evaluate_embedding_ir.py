@@ -5,7 +5,7 @@ import json
 import argparse
 from sentence_transformers import SentenceTransformer
 from data.embedding_train_data import load_and_prepare_datasets
-from helpers.ir_evaluator import evaluate_information_retrieval
+from helpers.ir_evaluator import create_evaluator_information_retrieval
 
 
 
@@ -57,7 +57,7 @@ def main():
     print("Datasets cargados")
     print("Evaluando modelos...")
     # Evaluator
-    evaluator = evaluate_information_retrieval(test_dataset)
+    evaluator = create_evaluator_information_retrieval(test_dataset)
     print("Modelos evaluados")
 
     print("Guardando métricas...")
