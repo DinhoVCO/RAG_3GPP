@@ -1,0 +1,99 @@
+  0%|▉                                                                                                                                                                                                     | 1/205 [00:26<1:31:17, 26.85s/it]Traceback (most recent call last):
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\RAG_3GPP\fine_tuning\embedding_ft.py", line 114, in <module>
+    main()
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\RAG_3GPP\fine_tuning\embedding_ft.py", line 109, in main
+    trainer = train_model(model, args_training, train_dataset, val_dataset, loss, evaluator)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\RAG_3GPP\fine_tuning\embedding_ft.py", line 89, in train_model
+    trainer.train()
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\transformers\trainer.py", line 2171, in train
+    return inner_training_loop(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\transformers\trainer.py", line 2531, in _inner_training_loop
+    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\transformers\trainer.py", line 3676, in training_step
+    loss = self.compute_loss(model, inputs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\sentence_transformers\trainer.py", line 393, in compute_loss
+    loss = loss_fn(features, labels)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\sentence_transformers\losses\MultipleNegativesRankingLoss.py", line 102, in forward
+    reps = [self.model(sentence_feature)["sentence_embedding"] for sentence_feature in sentence_features]
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\sentence_transformers\SentenceTransformer.py", line 690, in forward
+    input = module(input, **module_kwargs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\sentence_transformers\models\Transformer.py", line 393, in forward
+    output_states = self.auto_model(**trans_features, **kwargs, return_dict=False)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\transformers\models\bert\modeling_bert.py", line 1142, in forward
+    encoder_outputs = self.encoder(
+                      ^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\transformers\models\bert\modeling_bert.py", line 695, in forward
+    layer_outputs = layer_module(
+                    ^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\transformers\models\bert\modeling_bert.py", line 627, in forward
+    layer_output = apply_chunking_to_forward(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\transformers\pytorch_utils.py", line 255, in apply_chunking_to_forward
+    return forward_fn(*input_tensors)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\transformers\models\bert\modeling_bert.py", line 639, in feed_forward_chunk
+    intermediate_output = self.intermediate(attention_output)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\transformers\models\bert\modeling_bert.py", line 539, in forward
+    hidden_states = self.dense(hidden_states)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dinho\Desktop\Semestre_II\SBRC2025\Code\sbrc\Lib\site-packages\torch\nn\modules\linear.py", line 125, in forward
+    return F.linear(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
