@@ -1,6 +1,7 @@
 datasets
-transformers
+transformers[torch]
 sentence-transformers
+wandb
 #pip install -r requirements.txt --quiet
 #numpy==1.23.5
 #pandas>=1.5.0

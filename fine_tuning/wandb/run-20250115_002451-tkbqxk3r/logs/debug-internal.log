@@ -1,0 +1,15 @@
+{"time":"2025-01-15T00:24:52.3918587-05:00","level":"INFO","msg":"stream: starting","core version":"0.19.3","symlink path":"C:\\Users\\dinho\\Desktop\\Semestre_II\\SBRC2025\\Code\\RAG_3GPP\\fine_tuning\\wandb\\run-20250115_002451-tkbqxk3r\\logs\\debug-core.log"}
+{"time":"2025-01-15T00:24:52.8525996-05:00","level":"INFO","msg":"created new stream","id":"tkbqxk3r"}
+{"time":"2025-01-15T00:24:52.8531603-05:00","level":"INFO","msg":"stream: started","id":"tkbqxk3r"}
+{"time":"2025-01-15T00:24:52.8531603-05:00","level":"INFO","msg":"handler: started","stream_id":"tkbqxk3r"}
+{"time":"2025-01-15T00:24:52.8531603-05:00","level":"INFO","msg":"writer: Do: started","stream_id":"tkbqxk3r"}
+{"time":"2025-01-15T00:24:52.8531603-05:00","level":"INFO","msg":"sender: started","stream_id":"tkbqxk3r"}
+{"time":"2025-01-15T00:24:53.5953909-05:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-01-15T00:26:36.7174083-05:00","level":"INFO","msg":"stream: closing","id":"tkbqxk3r"}
+{"time":"2025-01-15T00:26:36.7201728-05:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-01-15T00:26:36.730118-05:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-01-15T00:26:38.1128932-05:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-01-15T00:26:38.5595767-05:00","level":"INFO","msg":"handler: closed","stream_id":"tkbqxk3r"}
+{"time":"2025-01-15T00:26:38.5595767-05:00","level":"INFO","msg":"sender: closed","stream_id":"tkbqxk3r"}
+{"time":"2025-01-15T00:26:38.5595767-05:00","level":"INFO","msg":"writer: Close: closed","stream_id":"tkbqxk3r"}
+{"time":"2025-01-15T00:26:38.5601352-05:00","level":"INFO","msg":"stream: closed","id":"tkbqxk3r"}
