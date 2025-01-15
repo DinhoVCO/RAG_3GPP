@@ -1,0 +1,15 @@
+{"time":"2025-01-14T23:49:47.6045611-05:00","level":"INFO","msg":"stream: starting","core version":"0.19.3","symlink path":"C:\\Users\\dinho\\Desktop\\Semestre_II\\SBRC2025\\Code\\RAG_3GPP\\fine_tuning\\wandb\\run-20250114_234946-nbgg6wvr\\logs\\debug-core.log"}
+{"time":"2025-01-14T23:49:48.180243-05:00","level":"INFO","msg":"created new stream","id":"nbgg6wvr"}
+{"time":"2025-01-14T23:49:48.180243-05:00","level":"INFO","msg":"stream: started","id":"nbgg6wvr"}
+{"time":"2025-01-14T23:49:48.180243-05:00","level":"INFO","msg":"writer: Do: started","stream_id":"nbgg6wvr"}
+{"time":"2025-01-14T23:49:48.180243-05:00","level":"INFO","msg":"sender: started","stream_id":"nbgg6wvr"}
+{"time":"2025-01-14T23:49:48.180243-05:00","level":"INFO","msg":"handler: started","stream_id":"nbgg6wvr"}
+{"time":"2025-01-14T23:49:48.75821-05:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-01-14T23:50:37.4286184-05:00","level":"INFO","msg":"stream: closing","id":"nbgg6wvr"}
+{"time":"2025-01-14T23:50:37.4291608-05:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-01-14T23:50:37.43816-05:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-01-14T23:50:38.4442045-05:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-01-14T23:50:38.8463625-05:00","level":"INFO","msg":"handler: closed","stream_id":"nbgg6wvr"}
+{"time":"2025-01-14T23:50:38.8463625-05:00","level":"INFO","msg":"writer: Close: closed","stream_id":"nbgg6wvr"}
+{"time":"2025-01-14T23:50:38.8469174-05:00","level":"INFO","msg":"sender: closed","stream_id":"nbgg6wvr"}
+{"time":"2025-01-14T23:50:38.8469174-05:00","level":"INFO","msg":"stream: closed","id":"nbgg6wvr"}

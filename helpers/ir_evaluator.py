@@ -1,6 +1,8 @@
 from sentence_transformers.evaluation import InformationRetrievalEvaluator
+import logging
 
-def evaluate_information_retrieval(test_dataset):
+def create_evaluator_information_retrieval(test_dataset):
+    logging.info("Creating evaluator...")
     corpus = dict(zip(test_dataset["q_id"], test_dataset["positive"]))
     queries = dict(zip(test_dataset["q_id"], test_dataset["anchor"]))
 
@@ -20,6 +22,7 @@ def evaluate_information_retrieval(test_dataset):
         ndcg_at_k=[10],
         mrr_at_k=[10],
     )
+    logging.info("Evaluator created.")
     return evaluator
 
 

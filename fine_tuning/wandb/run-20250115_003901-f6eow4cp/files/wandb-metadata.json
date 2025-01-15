@@ -1,0 +1,31 @@
+{
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "CPython 3.12.3",
+  "startedAt": "2025-01-15T05:39:02.224165Z",
+  "program": "C:\\Users\\dinho\\Desktop\\Semestre_II\\SBRC2025\\Code\\RAG_3GPP\\fine_tuning\\embedding_ft.py",
+  "codePath": "fine_tuning\\embedding_ft.py",
+  "git": {
+    "remote": "https://github.com/DinhoVCO/RAG_3GPP.git",
+    "commit": "b7e4e743985329d6feefbbfbcdda9b9a3f68a0d6"
+  },
+  "email": "dinho15971@gmail.com",
+  "root": "C:\\Users\\dinho\\Desktop\\Semestre_II\\SBRC2025\\Code\\RAG_3GPP\\fine_tuning",
+  "host": "LAPTOP-C440LLV6",
+  "executable": "C:\\Users\\dinho\\Desktop\\Semestre_II\\SBRC2025\\Code\\sbrc\\Scripts\\python.exe",
+  "codePathLocal": "embedding_ft.py",
+  "cpu_count": 4,
+  "cpu_count_logical": 8,
+  "disk": {
+    "/": {
+      "total": "510913409024",
+      "used": "476714991616"
+    }
+  },
+  "memory": {
+    "total": "14968041472"
+  },
+  "cpu": {
+    "count": 4,
+    "countLogical": 8
+  }
+}
