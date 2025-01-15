@@ -20,6 +20,14 @@ def parse_arguments():
 
 seed = 42
 
+def encontrar_checkpoint_unico(model_path):
+    """Busca el único checkpoint dentro de la carpeta del modelo."""
+    for d in os.listdir(model_path):
+        dir_path = os.path.join(model_path, d)
+        if os.path.isdir(dir_path) and d.startswith('checkpoint-'):
+            return dir_path
+    return None
+
 def load_models(model_dir, model_names):
     print("Cargando modelos...")
     models = {}
@@ -28,11 +36,17 @@ def load_models(model_dir, model_names):
     for model_name in os.listdir(model_dir):
         model_path = os.path.join(model_dir, model_name)
         if os.path.isdir(model_path):  # Verifica que sea un directorio de modelo
-            model_key = f"ft_{model_name[17:]}"
-            models[model_key] = SentenceTransformer(model_path)
+            checkpoint_dir = encontrar_checkpoint_unico(model_path)
+            if checkpoint_dir:
+            
+                model_key = f"ft_{model_name[17:]}"
+                models[model_key] = SentenceTransformer(checkpoint_dir)
+            else:
+                print(f"[ADVERTENCIA] No se encontró un checkpoint en {model_path}")
 
     for model_key, model_name in model_names.items():
-        models[model_key] = SentenceTransformer(model_name)
+        if model_key not in models:  # Evitar sobrescribir modelos ya cargados
+            models[model_key] = SentenceTransformer(model_name)
 
     return models
 
@@ -66,7 +80,7 @@ def main():
         metrics[model_key] = evaluator(model_to_evaluate)
 
     # Guardar las métricas en formato JSON
-    with open(f"{output_dir}/metrics_embedding.json", "w") as f:
+    with open(f"{output_dir}/metrics_checkpoint_embedding.json", "w") as f:
         json.dump(metrics, f, indent=4)
 
 if __name__ == "__main__":
