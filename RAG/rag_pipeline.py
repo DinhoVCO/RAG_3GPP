@@ -7,27 +7,30 @@ from tqdm import tqdm
 from format_prompt import format_input_context
 
 class RAGPipeline:
-    def __init__(self, llm: pipeline, knowledge_index: VectorStoreFAISS, reranker: Optional[RAGPretrainedModel] = None):
+    def __init__(self, llm: pipeline, knowledge_index: VectorStoreFAISS = None, reranker: Optional[RAGPretrainedModel] = None):
         self.llm = llm
         self.knowledge_index = knowledge_index
         self.reranker = reranker
 
-    def answer_batch(self, dataset_consultas, column, batch_size=1, num_retrieved_docs: int = 30, num_docs_final: int = 3):
-
-        relevant_docs = self.knowledge_index.buscar_por_batches(dataset_consultas=dataset_consultas, column=column, top_k=num_retrieved_docs, batch_size=batch_size)
-        if self.reranker:
-            tqdm.tqdm.disable = True
-            relevant_docs =  self.rerank_documents(relevant_docs, top_k_final=3)
-            tqdm.tqdm.disable = False
+    def answer_batch(self, dataset_consultas, column, batch_size=1, llm_batch_size = 1, num_retrieved_docs: int = 30, num_docs_final: int = 3):
+        if self.knowledge_index:
+            relevant_docs = self.knowledge_index.buscar_por_batches(dataset_consultas=dataset_consultas, column=column, top_k=num_retrieved_docs, batch_size=batch_size)
+            if self.reranker:
+                relevant_docs =  self.rerank_documents(relevant_docs, top_k_final=num_docs_final)
         prompts = []
         valid_options_question = []
-        for i in range(len(relevant_docs)):
-          context = "".join([f"\nDocument {str(i)}:" + doc for i, doc in enumerate(relevant_docs[i][1])])
-          final_prompt, valid_options = format_input_context(dataset_consultas[i], context)
-          prompts.append(final_prompt)
-          valid_options_question.append(valid_options)
+        for i in tqdm(range(len(relevant_docs)), desc="Generando prompts"):
+            if self.knowledge_index:
+                context = "".join([f"\nDocument {str(i)}:" + doc for i, doc in enumerate(relevant_docs[i][1])])
+                final_prompt, valid_options = format_input_context(dataset_consultas[i], context)
+                prompts.append(final_prompt)
+                valid_options_question.append(valid_options)
+            else :
+                final_prompt, valid_options = format_input_context(dataset_consultas[i])
+                prompts.append(final_prompt)
+                valid_options_question.append(valid_options)
 
-        answers = self.llm(prompts, batch_size=30)
+        answers = self.llm(prompts, batch_size=llm_batch_size)
         return answers, valid_options_question
 
     def rerank_documents(self, relevant_docs, top_k_final=3):

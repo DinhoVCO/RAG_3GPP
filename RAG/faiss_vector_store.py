@@ -13,7 +13,6 @@ class VectorStoreFAISS:
 
     def buscar_por_batches(self, dataset_consultas, column, top_k=10, batch_size=1):
         resultados_totales = []
-        num_batches = len(dataset_consultas) // batch_size + int(len(dataset_consultas) % batch_size != 0)
         for i in tqdm(range(0, len(dataset_consultas), batch_size), desc="🔍 Buscando"):
             batch = dataset_consultas.select(range(i, min(i + batch_size, len(dataset_consultas))))
             textos_batch = batch[column]
