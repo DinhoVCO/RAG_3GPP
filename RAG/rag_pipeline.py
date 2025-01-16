@@ -12,7 +12,7 @@ class RAGPipeline:
         self.knowledge_index = knowledge_index
         self.reranker = reranker
 
-    def answer_batch(self, dataset_consultas, column, batch_size=1, llm_batch_size = 1, num_retrieved_docs: int = 30, num_docs_final: int = 3):
+    def answer_batch(self, dataset_consultas, column, batch_size=100, llm_batch_size = 20, num_retrieved_docs: int = 30, num_docs_final: int = 3):
         if self.knowledge_index:
             relevant_docs = self.knowledge_index.buscar_por_batches(dataset_consultas=dataset_consultas, column=column, top_k=num_retrieved_docs, batch_size=batch_size)
             if self.reranker:

@@ -51,7 +51,7 @@ def save_answers_to_csv(answers, valid_options, file_path):
     })
     df.to_csv(file_path, index=False)
 
-def main(inference_type, embedding_model_name, reader_model_name, reranker_model_name, index_path, documents_dataset_name, test_dataset_name, output_csv_path):
+def main(inference_type, embedding_model_name, reader_model_name, reranker_model_name, index_path, documents_dataset_name, test_dataset_name, output_csv_path, batch_size, llm_batch_size):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Usando dispositivo: {device}")
     torch.set_default_device(device)
@@ -70,7 +70,7 @@ def main(inference_type, embedding_model_name, reader_model_name, reranker_model
     rag_pipeline = create_rag_pipeline(reader_model, tokenizer, vector_store, reranker_model)
 
     test_dataset = load_test_dataset(test_dataset_name)
-    answers, valid_options = rag_pipeline.answer_batch(test_dataset, column='question', batch_size=100)
+    answers, valid_options = rag_pipeline.answer_batch(test_dataset, column='question', batch_size=batch_size, llm_batch_size=llm_batch_size)
 
     save_answers_to_csv(answers, valid_options, output_csv_path)
 
@@ -84,7 +84,8 @@ if __name__ == "__main__":
     parser.add_argument("--documents_dataset_name", type=str, required=True, help="Name of the documents dataset")
     parser.add_argument("--test_dataset_name", type=str, required=True, help="Name of the test dataset")
     parser.add_argument("--output_csv_path", type=str, required=True, help="Path to save the answer output CSV")
-
+    parser.add_argument("--batch_size", type=int, default=100, help="batch size for encode dataset")
+    parser.add_argument("--llm_batch_size", type=int, default=20, help="batch size for the LLM model")
     args = parser.parse_args()
 
     main(
@@ -95,5 +96,7 @@ if __name__ == "__main__":
         args.index_path,
         args.documents_dataset_name,
         args.test_dataset_name,
-        args.output_csv_path
+        args.output_csv_path,
+        args.batch_size,
+        args.llm_batch_size,
     )
