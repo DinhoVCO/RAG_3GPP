@@ -73,7 +73,7 @@ def main(inference_type, embedding_model_name, reader_model_name, reranker_model
     rag_pipeline = create_rag_pipeline(reader_model, tokenizer, vector_store, reranker_model)
 
     test_dataset = load_test_dataset(test_dataset_name)
-    q_id, inference, valid_options, answer = rag_pipeline.answer_batch(test_dataset, column='question', batch_size=batch_size, llm_batch_size=llm_batch_size,num_retriever_docs=num_retriever_docs,num_docs_final=num_docs_final)
+    q_id, inference, valid_options, answer = rag_pipeline.answer_batch(test_dataset, column='question', batch_size=batch_size, llm_batch_size=llm_batch_size,num_retrieved_docs=num_retriever_docs,num_docs_final=num_docs_final)
 
     save_answers_to_csv(q_id, inference, valid_options, answer, output_csv_path)
 
