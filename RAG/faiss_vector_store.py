@@ -31,7 +31,8 @@ class VectorStoreFAISS:
 
             for j, consulta in enumerate(textos_batch):
                 resultados = [
-                    (self.documents[int(idx)]['text'], distancias[j][k], self.documents[int(idx)]['file_name'])
+                    self.documents[int(idx)]['text']
+                    #(self.documents[int(idx)]['text'], distancias[j][k], self.documents[int(idx)]['file_name'])
                     for k, idx in enumerate(indices[j])
                 ]
                 resultados_totales.append((consulta, resultados))
