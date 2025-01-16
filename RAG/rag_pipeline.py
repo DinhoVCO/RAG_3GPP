@@ -19,7 +19,7 @@ class RAGPipeline:
                 relevant_docs =  self.rerank_documents(relevant_docs, top_k_final=num_docs_final)
         prompts = []
         valid_options_question = []
-        for i in tqdm(range(len(relevant_docs)), desc="Generando prompts"):
+        for i in tqdm(range(len(dataset_consultas)), desc="Generando prompts"):
             if self.knowledge_index:
                 context = "".join([f"\nDocument {str(i)}:" + doc for i, doc in enumerate(relevant_docs[i][1])])
                 final_prompt, valid_options = format_input_context(dataset_consultas[i], context)
