@@ -17,7 +17,8 @@ def load_reader_model(model_name, device):
         torch_dtype="auto",
         trust_remote_code=True
     ).to(device)
-    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True, padding_side="left")
+    tokenizer.pad_token = tokenizer.eos_token
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
     return model, tokenizer
@@ -47,7 +48,7 @@ def load_test_dataset(dataset_name):
 def save_answers_to_csv(q_id, inference, valid_options, answer, file_path):
     df = pd.DataFrame({
         'question_id': q_id,
-        'answer': inference,
+        'inference': inference,
         'valid_options': valid_options,
         'answer': answer
     })
