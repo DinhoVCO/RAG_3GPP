@@ -44,10 +44,12 @@ def create_rag_pipeline(reader_model, tokenizer, vector_store, reranker_model):
 def load_test_dataset(dataset_name):
     return load_dataset(dataset_name, split='test')
 
-def save_answers_to_csv(answers, valid_options, file_path):
+def save_answers_to_csv(q_id, inference, valid_options, answer, file_path):
     df = pd.DataFrame({
-        'answer': answers,
-        'valid_options': valid_options
+        'question_id': q_id,
+        'answer': inference,
+        'valid_options': valid_options,
+        'answer': answer
     })
     df.to_csv(file_path, index=False)
 
@@ -70,9 +72,9 @@ def main(inference_type, embedding_model_name, reader_model_name, reranker_model
     rag_pipeline = create_rag_pipeline(reader_model, tokenizer, vector_store, reranker_model)
 
     test_dataset = load_test_dataset(test_dataset_name)
-    answers, valid_options = rag_pipeline.answer_batch(test_dataset, column='question', batch_size=batch_size, llm_batch_size=llm_batch_size)
+    q_id, inference, valid_options, answer = rag_pipeline.answer_batch(test_dataset, column='question', batch_size=batch_size, llm_batch_size=llm_batch_size)
 
-    save_answers_to_csv(answers, valid_options, output_csv_path)
+    save_answers_to_csv(q_id, inference, valid_options, answer, output_csv_path)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="RAG Pipeline Execution")
