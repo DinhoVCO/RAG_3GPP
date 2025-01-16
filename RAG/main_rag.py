@@ -80,12 +80,15 @@ if __name__ == "__main__":
     parser.add_argument("--embedding_model_name", type=str, default='BAAI/bge-small-en-v1.5', help="Name of the embedding model")
     parser.add_argument("--reader_model_name", type=str, default='microsoft/phi-2', help="Name of the reader model")
     parser.add_argument("--reranker_model_name", type=str, default='colbert-ir/colbertv2.0', help="Name of the reranker model")
-    parser.add_argument("--index_path", type=str, required=True, help="Path to the FAISS index")
-    parser.add_argument("--documents_dataset_name", type=str, required=True, help="Name of the documents dataset")
+    parser.add_argument("--index_path", type=str, required=False, help="Path to the FAISS index")
+    parser.add_argument("--documents_dataset_name", type=str, required=False, help="Name of the documents dataset")
     parser.add_argument("--test_dataset_name", type=str, required=True, help="Name of the test dataset")
     parser.add_argument("--output_csv_path", type=str, required=True, help="Path to save the answer output CSV")
     parser.add_argument("--batch_size", type=int, default=100, help="batch size for encode dataset")
     parser.add_argument("--llm_batch_size", type=int, default=20, help="batch size for the LLM model")
+    parser.add_argument("--num_retriever_docs", type=int, default=10, help="Number of documents to retrieve from the index")
+    parser.add_argument("--num_docs_final", type=int, default=3, help="Number of documents to keep after reranking")
+
     args = parser.parse_args()
 
     main(
