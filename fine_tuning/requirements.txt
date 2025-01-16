@@ -8,6 +8,7 @@ langchain
 matplotlib
 huggingface_hub
 faiss-cpu
+ragatouille
 #pip install -r requirements.txt --quiet
 #numpy==1.23.5
 #pandas>=1.5.0

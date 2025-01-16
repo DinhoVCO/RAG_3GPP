@@ -39,12 +39,11 @@ def crear_indice_faiss(embeddings, path_indice_faiss, dataset_name):
     faiss.write_index(indice, f"{path_indice_faiss}/faiss_cpu_{dataset_name[-5:]}.index")
     print("Índice guardado exitosamente.")
 
-def main(nombre_dataset, path_indice_faiss):
+def main(nombre_dataset, path_indice_faiss, batch_size=4096):
     dispositivo = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(f"Usando dispositivo: {dispositivo}")
 
     modelo = SentenceTransformer('dinho1597/bge-small-qa-telecom-ft', device=dispositivo)
-    batch_size = 4096
 
     dataset = load_dataset(nombre_dataset, split='train')
     dataset = dataset.select_columns(['text', 'file_name'])
@@ -59,6 +58,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generar embeddings y crear índice FAISS.")
     parser.add_argument("--dataset", type=str, required=True, help="Nombre del dataset.")
     parser.add_argument("--output", type=str, required=True, help="Ruta para guardar el índice FAISS.")
+    parser.add_argument('--batch_size', type=int, default=4096, help="Batch size")
 
     args = parser.parse_args()
     main(args.dataset, args.output)
