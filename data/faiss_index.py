@@ -43,7 +43,7 @@ def main(nombre_dataset, path_indice_faiss):
     dispositivo = 'cuda' if torch.cuda.is_available() else 'cpu'
     print(f"Usando dispositivo: {dispositivo}")
 
-    modelo = SentenceTransformer('dinho1597/3GPP-docs-100cs', device=dispositivo)
+    modelo = SentenceTransformer('dinho1597/bge-small-qa-telecom-ft', device=dispositivo)
     batch_size = 4096
 
     dataset = load_dataset(nombre_dataset, split='train')
