@@ -54,7 +54,7 @@ def save_answers_to_csv(q_id, inference, valid_options, answer, file_path):
     })
     df.to_csv(file_path, index=False)
 
-def main(inference_type, embedding_model_name, reader_model_name, reranker_model_name, index_path, documents_dataset_name, test_dataset_name, output_csv_path, batch_size, llm_batch_size):
+def main(inference_type, embedding_model_name, reader_model_name, reranker_model_name, index_path, documents_dataset_name, test_dataset_name, output_csv_path, batch_size, llm_batch_size, num_retriever_docs, num_docs_final):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Usando dispositivo: {device}")
     torch.set_default_device(device)
@@ -73,7 +73,7 @@ def main(inference_type, embedding_model_name, reader_model_name, reranker_model
     rag_pipeline = create_rag_pipeline(reader_model, tokenizer, vector_store, reranker_model)
 
     test_dataset = load_test_dataset(test_dataset_name)
-    q_id, inference, valid_options, answer = rag_pipeline.answer_batch(test_dataset, column='question', batch_size=batch_size, llm_batch_size=llm_batch_size)
+    q_id, inference, valid_options, answer = rag_pipeline.answer_batch(test_dataset, column='question', batch_size=batch_size, llm_batch_size=llm_batch_size,num_retriever_docs=num_retriever_docs,num_docs_final=num_docs_final)
 
     save_answers_to_csv(q_id, inference, valid_options, answer, output_csv_path)
 
@@ -105,4 +105,6 @@ if __name__ == "__main__":
         args.output_csv_path,
         args.batch_size,
         args.llm_batch_size,
+        args.num_retriever_docs,
+        args.num_docs_final
     )
