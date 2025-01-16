@@ -19,6 +19,8 @@ class RAGPipeline:
                 relevant_docs =  self.rerank_documents(relevant_docs, top_k_final=num_docs_final)
         prompts = []
         valid_options_question = []
+        q_id = []
+        correct_answers = []
         for i in tqdm(range(len(dataset_consultas)), desc="Generando prompts"):
             if self.knowledge_index:
                 context = "".join([f"\nDocument {str(i)}:" + doc for i, doc in enumerate(relevant_docs[i][1])])
@@ -29,9 +31,10 @@ class RAGPipeline:
                 final_prompt, valid_options = format_input_context(dataset_consultas[i])
                 prompts.append(final_prompt)
                 valid_options_question.append(valid_options)
-
+            q_id.append(dataset_consultas[i]['question_id'])
+            correct_answers.append(dataset_consultas[i]['answer'])
         answers = self.llm(prompts, batch_size=llm_batch_size)
-        return answers, valid_options_question
+        return q_id, answers, valid_options_question, correct_answers
 
     def rerank_documents(self, relevant_docs, top_k_final=3):
         reranked_documents = []
