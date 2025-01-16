@@ -92,7 +92,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     main(
-        args.input_type,
+        args.inference_type,
         args.embedding_model_name,
         args.reader_model_name,
         args.reranker_model_name,
