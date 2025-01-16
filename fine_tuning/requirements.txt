@@ -6,6 +6,8 @@ docx2txt
 llama-index
 langchain
 matplotlib
+huggingface_hub
+faiss-cpu
 #pip install -r requirements.txt --quiet
 #numpy==1.23.5
 #pandas>=1.5.0
