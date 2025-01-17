@@ -2,9 +2,14 @@ import pandas as pd
 import random
 import ast
 from collections import Counter
+from datasets import load_dataset
+import os
 
-def load_results(csv_path):
-    return pd.read_csv(
+def load_results(csv_path, test_dataset):
+    test_dataset = load_dataset(test_dataset, split ='test')
+    test_df = pd.DataFrame(test_dataset)
+    test_df = test_df[['question_id','category']]
+    result = pd.read_csv(
         csv_path,
         converters={
             'question_id': int,
@@ -12,6 +17,8 @@ def load_results(csv_path):
             'valid_options': ast.literal_eval
         }
     )
+    merged_df = pd.merge(result, test_df, on='question_id')
+    return merged_df
 
 def simple_extract_answer(model_output, valid_options):
     values = [opt + ')' for opt in valid_options]
@@ -52,7 +59,7 @@ def simple_extract_answer(model_output, valid_options):
     print('------------')
     return random.choice(valid_options)
 
-def evaluate_results(results):
+def evaluate_results(test,results,path_save):
     ans = []
     for index, row in results.iterrows():
         ans.append(simple_extract_answer(row['inference'][0]['generated_text'], row['valid_options']))
@@ -60,17 +67,31 @@ def evaluate_results(results):
     results['respuesta_usuario'] = ans
     results['correcta'] = results['answer'] == results['respuesta_usuario']
     precision = results['correcta'].mean() * 100
-    return precision
+
+    if not os.path.exists(path_save):
+        with open(path_save, 'w') as file:
+            file.write('test, categoria ,precision\n') 
+    with open(path_save, 'w') as file:
+        precision = results['correcta'].mean() * 100
+        file.write(f'{test},-,{precision}\n')  
+        categories = results['category'].unique()
+        for category in categories:
+            category_df = results[results['category'] == category]
+            precision_c = category_df['correcta'].mean() * 100
+            file.write(f'{test},{category},{precision_c}\n')  
 
 def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="Evaluar precisión de respuestas extraídas.")
     parser.add_argument('--results_path', type=str, required=True, help="Ruta al archivo CSV de resultados.")
-    args = parser.parse_args()
+    parser.add_argument('--test_dataset', type=str, required=True, help="Nombre del dataset de test.")
+    parser.add_argument('--save_path', type=str, required=True, help="Direccion opara guardar las evaluacion")
 
-    results = load_results(args.results_path)
-    precision = evaluate_results(results)
+    args = parser.parse_args()
+    nombre_archivo = os.path.basename(args.results_path)
+    results = load_results(args.results_path, args.test_dataset)
+    precision = evaluate_results(nombre_archivo,results,args.save_path)
     print(f"La precisión es: {precision:.2f}%")
 
 if __name__ == "__main__":
