@@ -55,8 +55,8 @@ def simple_extract_answer(model_output, valid_options):
 
     for line in lines:
         words = line.strip().split()
-        if(words[0] == 'Option'):
-            if(len(words) > 1):
+        if(len(words) > 1):
+            if(words[0] == 'Option'):
                 return words[1][0]
 
     print('------------')
