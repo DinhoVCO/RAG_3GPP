@@ -1,5 +1,9 @@
+import os
+import sys
 from string import Template
 import pandas as pd
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+import random
 
 template_RAG = Template(
     "Instruct: Use the context provided to select the correct option. Select the correct option from $valid_options. Respond with the letter of the correct option. (e.g., 'A').\n"
@@ -50,3 +54,27 @@ def format_input_context(row, context=None):
         )
 
     return input_text, valid_options
+
+def get_answer(row):
+    ans = row['answer']
+    full_ans = row[ans]
+    return f"{ans}) {full_ans}"
+
+def get_context(row, include_explanation = False):
+    relevant_docs = row['relevant_documents']
+    if include_explanation:
+        posicion_aleatoria = random.randint(0, len(relevant_docs))
+        # Insertar el elemento en la posición aleatoria
+        relevant_docs.insert(posicion_aleatoria, row['explanation'])
+        #relevant_docs.append(row['explanation'])
+    context = ""
+    context += "".join(
+        [f"\nDocument {str(i)}:" + doc for i, doc in enumerate(relevant_docs)]
+    )
+    return context
+
+def get_full_promt(row, include_explanation = False):
+    context = get_context(row,include_explanation)
+    question = format_input_context(row, context)[0]
+    answer = get_answer(row)
+    return f"{question}\n{answer}"
