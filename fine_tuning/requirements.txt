@@ -10,6 +10,9 @@ huggingface_hub
 faiss-cpu
 trl
 peft
+bitsandbytes
+accelerate
+einops
 #pip install -r requirements.txt --quiet
 #numpy==1.23.5
 #pandas>=1.5.0
