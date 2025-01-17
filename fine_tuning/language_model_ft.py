@@ -23,7 +23,6 @@ def load_model_and_tokenizer(model_name):
         trust_remote_code=True,
         low_cpu_mem_usage=True,
         device_map={"": 0},
-        revision="refs/pr/23"
     )
     model.config.use_cache = False
     model.config.pretraining_tp = 1
@@ -63,7 +62,7 @@ def configure_training_arguments(output_dir, batch_size, num_epochs):
         group_by_length=True,
         save_steps=0,
         logging_steps=25,
-        report_to="none"
+        report_to="wandb",
     )
 
 def train_model(batch_size, model_name, new_model_name, save_path, num_epochs,train_dataset_name):
