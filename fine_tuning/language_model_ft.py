@@ -67,7 +67,7 @@ def configure_training_arguments(output_dir, batch_size, num_epochs):
     )
 
 def train_model(batch_size, model_name, new_model_name, save_path, num_epochs,train_dataset_name):
-    dataset = load_and_prepare_dataset('train_dataset_name', split='train')
+    dataset = load_and_prepare_dataset(train_dataset_name)
     model, tokenizer = load_model_and_tokenizer(model_name)
     peft_config = configure_lora()
 
