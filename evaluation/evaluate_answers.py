@@ -53,6 +53,12 @@ def simple_extract_answer(model_output, valid_options):
         if matches:
             return matches[0][1]
 
+    for line in lines:
+        words = line.strip().split()
+        if(words[0] == 'Option'):
+            if(len(words) > 1):
+                return words[1][0]
+
     print('------------')
     print('retornando valor aleatorio')
     print(model_output)
