@@ -71,7 +71,7 @@ def evaluate_results(test,results,path_save):
     if not os.path.exists(path_save+'/accuracy.txt'):
         with open(path_save+'/accuracy.txt', 'w') as file:
             file.write('test, categoria ,precision\n') 
-    with open(path_save+'/accuracy.txt', 'w') as file:
+    with open(path_save+'/accuracy.txt', 'a') as file:
         precision = results['correcta'].mean() * 100
         file.write(f'{test},-,{precision}\n')  
         categories = results['category'].unique()
@@ -91,8 +91,8 @@ def main():
     args = parser.parse_args()
     nombre_archivo = os.path.basename(args.results_path)
     results = load_results(args.results_path, args.test_dataset)
-    precision = evaluate_results(nombre_archivo,results,args.save_path)
-    print(f"La precisión es: {precision:.2f}%")
+    evaluate_results(nombre_archivo,results,args.save_path)
+
 
 if __name__ == "__main__":
     main()
