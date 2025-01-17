@@ -68,10 +68,10 @@ def evaluate_results(test,results,path_save):
     results['correcta'] = results['answer'] == results['respuesta_usuario']
     precision = results['correcta'].mean() * 100
 
-    if not os.path.exists(path_save):
-        with open(path_save, 'w') as file:
+    if not os.path.exists(path_save+'/accuracy.txt'):
+        with open(path_save+'/accuracy.txt', 'w') as file:
             file.write('test, categoria ,precision\n') 
-    with open(path_save, 'w') as file:
+    with open(path_save+'/accuracy.txt', 'w') as file:
         precision = results['correcta'].mean() * 100
         file.write(f'{test},-,{precision}\n')  
         categories = results['category'].unique()
