@@ -93,7 +93,7 @@ def main():
     parser.add_argument('--results_path', type=str, required=True, help="Ruta al archivo CSV de resultados.")
     parser.add_argument('--test_dataset', type=str, required=True, help="Nombre del dataset de test.")
     parser.add_argument('--save_path', type=str, required=True, help="Direccion opara guardar las evaluacion")
-
+    random.seed(42) 
     args = parser.parse_args()
     nombre_archivo = os.path.basename(args.results_path)
     results = load_results(args.results_path, args.test_dataset)
