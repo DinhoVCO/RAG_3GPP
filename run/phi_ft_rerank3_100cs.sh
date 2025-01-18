@@ -5,7 +5,7 @@ python /content/RAG_3GPP/RAG/main_rag.py \
   --index_path "/content/drive/MyDrive/Papers/RAG_3GPP/index/faiss_cpu_100cs.index" \
   --documents_dataset_name "dinho1597/3GPP-docs-100cs" \
   --test_dataset_name "dinho1597/3GPP-QA-MultipleChoice" \
-  --output_csv_path "/content/drive/MyDrive/Papers/RAG_3GPP/results/phi_basic_rerank10_100cs_results.csv" \
+  --output_csv_path "/content/drive/MyDrive/Papers/RAG_3GPP/results/phi_ft_rerank3_100cs_results.csv" \
   --batch_size 80 \
   --llm_batch_size 10 \
   --num_retriever_docs 10 \
