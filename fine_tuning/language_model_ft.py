@@ -23,6 +23,7 @@ def load_model_and_tokenizer(model_name):
         trust_remote_code=True,
         low_cpu_mem_usage=True,
         device_map={"": 0},
+        #revision="refs/pr/23"
     )
     model.config.use_cache = False
     model.config.pretraining_tp = 1
