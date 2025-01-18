@@ -15,7 +15,8 @@ def load_reader_model(model_name, device):
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
         torch_dtype="auto",
-        trust_remote_code=True
+        trust_remote_code=True,
+        #revision="refs/pr/23"
     ).to(device)
     tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True, padding_side="left")
     tokenizer.pad_token = tokenizer.eos_token
