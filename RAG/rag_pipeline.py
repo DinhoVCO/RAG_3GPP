@@ -41,8 +41,8 @@ class RAGPipeline:
         for i in range(len(relevant_docs)):
           question = relevant_docs[i][0]
           docs_val = relevant_docs[i][1]
-          docs = [doc[0] for doc in docs_val]  # Keep only the text
-          rerank_docs = self.reranker.rerank(question, docs, k=top_k_final)
+          #docs = [doc[0] for doc in docs_val]  # Keep only the text
+          rerank_docs = self.reranker.rerank(question, docs_val, k=top_k_final)
           rerank_docs = [doc["content"] for doc in rerank_docs]
           reranked_documents.append((question,rerank_docs))
         return reranked_documents
