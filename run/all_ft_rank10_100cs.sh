@@ -1,6 +1,6 @@
 python /content/RAG_3GPP/RAG/main_rag.py \
   --inference_type "ranker" \
-  --reader_model_name "dinho1597/phi-2-telecom-ft-v1" \
+  --reader_model_name "dinho1597/phi-2-telecom-ft-v1_test" \
   --embedding_model_name "dinho1597/bge-small-qa-telecom-ft" \
   --index_path "/content/drive/MyDrive/Papers/RAG_3GPP/index/faiss_cpu_100cs.index" \
   --documents_dataset_name "dinho1597/3GPP-docs-100cs" \
