@@ -1,0 +1,11 @@
+python /content/RAG_3GPP/RAG/main_rag.py \
+  --inference_type "ranker" \
+  --reader_model_name "microsoft/phi-2" \
+  --embedding_model_name "dinho1597/bge-small-qa-telecom-ft" \
+  --index_path "/content/drive/MyDrive/Papers/RAG_3GPP/index/faiss_cpu_100cs.index" \
+  --documents_dataset_name "dinho1597/3GPP-docs-100cs" \
+  --test_dataset_name "dinho1597/3GPP-QA-MultipleChoice" \
+  --output_csv_path "/content/drive/MyDrive/Papers/RAG_3GPP/results/phi_ft_rank10_100cs_results.csv" \
+  --batch_size 80 \
+  --llm_batch_size 10 \
+  --num_retriever_docs 10 \
