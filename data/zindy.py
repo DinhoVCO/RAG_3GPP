@@ -5,7 +5,7 @@ import numpy as np
 from huggingface_hub import HfApi
 from huggingface_hub import login
 
-login(token="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")
+login(token="")
 api = HfApi()
 
 file_path1 = "./RAG_3GPP/data/testing/TeleQnA_testing1.txt"
