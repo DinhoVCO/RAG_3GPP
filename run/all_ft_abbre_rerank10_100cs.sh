@@ -7,7 +7,7 @@ python /content/RAG_3GPP/RAG/main_rag.py \
   --documents_dataset_name "dinho1597/3GPP-docs-100cs" \
   --test_dataset_name "dinho1597/3GPP-QA-MultipleChoice" \
   --output_csv_path "/content/drive/MyDrive/Papers/RAG_3GPP/results/all_ft_abbre_rerank10_100cs_results.csv" \
-  --batch_size 80 \
-  --llm_batch_size 10 \
+  --batch_size 40 \
+  --llm_batch_size 5 \
   --num_retriever_docs 10 \
   --num_docs_final 10 \
