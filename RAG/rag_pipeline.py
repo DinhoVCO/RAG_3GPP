@@ -21,7 +21,7 @@ class RAGPipeline:
                 
                 if self.knowledge_abbre_index:
                     relevant_Abbr = self.knowledge_abbre_index.buscar_por_batches(dataset_consultas=dataset_consultas, column=column, top_k=10, batch_size=batch_size)
-                    relevant_Abbr =  self.rerank_documents(relevant_docs, top_k_final=3)
+                    relevant_Abbr =  self.rerank_documents(relevant_Abbr, top_k_final=3)
         prompts = []
         valid_options_question = []
         q_id = []

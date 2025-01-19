@@ -55,7 +55,7 @@ def save_answers_to_csv(q_id, inference, valid_options, answer, file_path):
     })
     df.to_csv(file_path, index=False)
 
-def main(inference_type, embedding_model_name, reader_model_name, reranker_model_name, index_path, documents_dataset_name, test_dataset_name, output_csv_path, batch_size, llm_batch_size, num_retriever_docs, num_docs_final):
+def main(inference_type, embedding_model_name, reader_model_name, reranker_model_name, index_path, documents_dataset_name, test_dataset_name, output_csv_path, batch_size, llm_batch_size, num_retriever_docs, num_docs_final, index_abbre_path):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Usando dispositivo: {device}")
     torch.set_default_device(device)
@@ -64,6 +64,7 @@ def main(inference_type, embedding_model_name, reader_model_name, reranker_model
     reranker_model = None
     vector_store = None
     reader_model, tokenizer = load_reader_model(reader_model_name, device)
+    vector_store_abbre = None
     if(inference_type == 'ranker' ):
         embedding_model = load_embedding_model(embedding_model_name, device)
         vector_store = initialize_vector_store(index_path, documents_dataset_name, embedding_model)
@@ -71,7 +72,13 @@ def main(inference_type, embedding_model_name, reader_model_name, reranker_model
         embedding_model = load_embedding_model(embedding_model_name, device)
         reranker_model = load_reranker_model(reranker_model_name)
         vector_store = initialize_vector_store(index_path, documents_dataset_name, embedding_model)
-    rag_pipeline = create_rag_pipeline(reader_model, tokenizer, vector_store, reranker_model)
+    if(inference_type == 'abbre'):
+        embedding_model = load_embedding_model(embedding_model_name, device)
+        reranker_model = load_reranker_model(reranker_model_name)
+        vector_store = initialize_vector_store(index_path, documents_dataset_name, embedding_model)
+        vector_store_abbre = initialize_vector_store(index_abbre_path, 'dinho1597/3GPP-abbreviations-dataset', embedding_model)
+
+    rag_pipeline = create_rag_pipeline(reader_model, tokenizer, vector_store, reranker_model, vector_store_abbre)
 
     test_dataset = load_test_dataset(test_dataset_name)
     q_id, inference, valid_options, answer = rag_pipeline.answer_batch(test_dataset, column='question', batch_size=batch_size, llm_batch_size=llm_batch_size,num_retrieved_docs=num_retriever_docs,num_docs_final=num_docs_final)
@@ -85,6 +92,7 @@ if __name__ == "__main__":
     parser.add_argument("--reader_model_name", type=str, default='microsoft/phi-2', help="Name of the reader model")
     parser.add_argument("--reranker_model_name", type=str, default='colbert-ir/colbertv2.0', help="Name of the reranker model")
     parser.add_argument("--index_path", type=str, required=False, help="Path to the FAISS index")
+    parser.add_argument("--index_abbre_path", type=str, required=False, help="Path to the abbrevation FAISS index")
     parser.add_argument("--documents_dataset_name", type=str, required=False, help="Name of the documents dataset")
     parser.add_argument("--test_dataset_name", type=str, required=True, help="Name of the test dataset")
     parser.add_argument("--output_csv_path", type=str, required=True, help="Path to save the answer output CSV")
@@ -107,5 +115,6 @@ if __name__ == "__main__":
         args.batch_size,
         args.llm_batch_size,
         args.num_retriever_docs,
-        args.num_docs_final
+        args.num_docs_final,
+        args.index_abbre_path
     )
