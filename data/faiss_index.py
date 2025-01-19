@@ -46,7 +46,7 @@ def main(nombre_dataset, path_indice_faiss, batch_size=4096):
     modelo = SentenceTransformer('dinho1597/bge-small-qa-telecom-ft', device=dispositivo)
 
     dataset = load_dataset(nombre_dataset, split='train')
-    dataset = dataset.select_columns(['text', 'file_name'])
+    #dataset = dataset.select_columns(['text', 'file_name'])
 
     print("Generando embeddings...")
     embeddings = generar_embeddings_batch_gpu(modelo, dataset, batch_size, dispositivo)
