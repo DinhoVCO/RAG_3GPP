@@ -30,7 +30,7 @@ def load_reranker_model(model_name):
 def initialize_vector_store(index_path, dataset_name, embedding_model):
     return VectorStoreFAISS(index_path, dataset_name, embedding_model)
 
-def create_rag_pipeline(reader_model, tokenizer, vector_store, reranker_model):
+def create_rag_pipeline(reader_model, tokenizer, vector_store, reranker_model, vector_store_abbre=None):
     reader_llm = pipeline(
         model=reader_model,
         tokenizer=tokenizer,
@@ -41,7 +41,7 @@ def create_rag_pipeline(reader_model, tokenizer, vector_store, reranker_model):
         return_full_text=False,
         max_new_tokens=20,
     )
-    return RAGPipeline(llm=reader_llm, knowledge_index=vector_store, reranker=reranker_model)
+    return RAGPipeline(llm=reader_llm, knowledge_index=vector_store, reranker=reranker_model, knowledge_abbre_index=vector_store_abbre)
 
 def load_test_dataset(dataset_name):
     return load_dataset(dataset_name, split='test')
