@@ -8,5 +8,5 @@ python /content/RAG_3GPP/RAG/main_rag.py \
   --output_csv_path "/content/drive/MyDrive/Papers/RAG_3GPP/results/all_ft_rerank10_100cs_results.csv" \
   --batch_size 80 \
   --llm_batch_size 10 \
-  --num_retriever_docs 10 \
+  --num_retriever_docs 20 \
   --num_docs_final 10 \
