@@ -7,16 +7,21 @@ from tqdm import tqdm
 from format_prompt import format_input_context
 
 class RAGPipeline:
-    def __init__(self, llm: pipeline, knowledge_index: VectorStoreFAISS = None, reranker: Optional[RAGPretrainedModel] = None):
+    def __init__(self, llm: pipeline, knowledge_index: VectorStoreFAISS = None, reranker: Optional[RAGPretrainedModel] = None, knowledge_abbre_index: VectorStoreFAISS = None):
         self.llm = llm
         self.knowledge_index = knowledge_index
         self.reranker = reranker
+        self.knowledge_abbre_index = knowledge_abbre_index
 
     def answer_batch(self, dataset_consultas, column, batch_size=100, llm_batch_size = 20, num_retrieved_docs: int = 30, num_docs_final: int = 3):
         if self.knowledge_index:
             relevant_docs = self.knowledge_index.buscar_por_batches(dataset_consultas=dataset_consultas, column=column, top_k=num_retrieved_docs, batch_size=batch_size)
             if self.reranker:
                 relevant_docs =  self.rerank_documents(relevant_docs, top_k_final=num_docs_final)
+                
+                if self.knowledge_abbre_index:
+                    relevant_Abbr = self.knowledge_abbre_index.buscar_por_batches(dataset_consultas=dataset_consultas, column=column, top_k=10, batch_size=batch_size)
+                    relevant_Abbr =  self.rerank_documents(relevant_docs, top_k_final=3)
         prompts = []
         valid_options_question = []
         q_id = []
@@ -24,7 +29,13 @@ class RAGPipeline:
         for i in tqdm(range(len(dataset_consultas)), desc="Generando prompts"):
             if self.knowledge_index:
                 context = "".join([f"\nDocument {str(i)}:" + doc for i, doc in enumerate(relevant_docs[i][1])])
-                final_prompt, valid_options = format_input_context(dataset_consultas[i], context)
+                if self.knowledge_abbre_index:
+                    abbr = "".join([f"\n - " + doc for i, doc in enumerate(relevant_Abbr[i][1])])
+                    final_prompt, valid_options = format_input_context(dataset_consultas[i], context, abbr)
+
+                else :
+                    context = "".join([f"\nDocument {str(i)}:" + doc for i, doc in enumerate(relevant_docs[i][1])])
+                    final_prompt, valid_options = format_input_context(dataset_consultas[i], context)
                 prompts.append(final_prompt)
                 valid_options_question.append(valid_options)
             else :

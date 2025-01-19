@@ -13,13 +13,22 @@ template_RAG = Template(
     "Output:"
 )
 
+template_RAG_Abbr = Template(
+    "Instruct: Use the Abbreviations and Context provided to select the correct option. Select the correct option from $valid_options. Respond with the letter of the correct option. (e.g., 'A').\n"
+    "Abbreviations:\n$abbreviations\n\n"
+    "Context:\n$explanation\n\n"
+    "Question:\n$question\n\n"
+    "Options:\n$options\n\n"
+    "Output:"
+)
+
 template_base = Template(
     "Instruct: Answer the following question by selecting the correct option. Select the correct option from $valid_options. Respond with the letter of the correct option. (e.g., 'A').\n"
     "Question:\n$question\n\n"
     "Options:\n$options\n\n"
     "Output:"
 )
-def format_input_context(row, context=None):
+def format_input_context(row, context=None, abbreviations=None):
     question_text = row['question']  # Accede directamente a la pregunta en la fila
 
     # Crear una lista de opciones válidas (diferentes de None)
@@ -38,15 +47,22 @@ def format_input_context(row, context=None):
     options_text = "\n".join([f"{key}) {value}" for key, value in options_dict.items() if key in valid_options])
 
     if context:
-        # Usar el template con explicación
-        input_text = template_RAG.substitute(
-            valid_options=valid_options_text,
-            question=question_text,
-            options=options_text,
-            explanation=context
-        )
+        if abbreviations:
+            input_text = template_RAG_Abbr.substitute(
+                valid_options=valid_options_text,
+                abbreviations=abbreviations,
+                question=question_text,
+                options=options_text,
+                explanation=context
+            )
+        else:
+            input_text = template_RAG.substitute(
+                valid_options=valid_options_text,
+                question=question_text,
+                options=options_text,
+                explanation=context
+            )
     else:
-        # Usar el template sin explicación
         input_text = template_base.substitute(
             valid_options=valid_options_text,
             question=question_text,
